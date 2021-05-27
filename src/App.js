@@ -1,4 +1,4 @@
-import React, { useState, } from 'react'
+import React, { useState } from 'react'
 import './App.scss'
 import Canvas from './Canvas'
 
@@ -7,25 +7,16 @@ function App() {
     //const newGame = new Game(setStep)
     const [newGame, setNewGame] = useState(new Game(setStep))
 
-
     return (
         <div className="App">
             <div className="ctrl">
                 <button onClick={newGame.togglePause}>Pause</button>
                 <button onClick={newGame.randomGrid}>Rnd</button>
-                <button onClick={newGame.progressGrid}>Prog</button>
+                <button onClick={newGame.manualStep}>Prog</button>
 
-                <button
-                    onClick={() => {
-                        newGame.togglePosition(4, 4)
-                        setStep(newGame.grid[4][4])
-                    }}
-                >
-                    Toggle 4,4
-                </button>
                 <div>Step: {step}</div>
             </div>
-            <Canvas draw={newGame.draw} height={500} width={'500'} />
+            <Canvas draw={newGame.draw} height={1000} width={'1000'} />
         </div>
     )
 }
@@ -36,7 +27,7 @@ class Game {
     constructor(setStep) {
         this.pause = false
         this.last = 0
-        this.speed = 2000
+        this.speed = 200
         this.step = 0
         this.setStep = setStep
 
@@ -51,6 +42,7 @@ class Game {
         this.checkPosition = this.checkPosition.bind(this)
         this.setPosition = this.setPosition.bind(this)
         this.progressGrid = this.progressGrid.bind(this)
+        this.manualStep = this.manualStep.bind(this)
 
         this.togglePosition(1, 1)
     }
@@ -87,6 +79,10 @@ class Game {
         this.pause = !this.pause
     }
 
+    manualStep() {
+        this.drawGrid()
+    }
+
     randomGrid() {
         for (let x = 0; x < this.numberOfDivisions; x++) {
             for (let y = 0; y < this.numberOfDivisions; y++) {
@@ -96,14 +92,16 @@ class Game {
     }
 
     progressGrid() {
+        let oldGrid = [...this.grid]
+
         for (let x = 0; x < this.numberOfDivisions; x++) {
             for (let y = 0; y < this.numberOfDivisions; y++) {
-                this.checkPosition(x, y)
+                this.checkPosition(oldGrid, x, y)
             }
         }
     }
 
-    checkPosition(x, y) {
+    checkPosition(grid, x, y) {
         let neighbours = 0
 
         let xmin = x !== 0 ? -1 : 0
@@ -113,7 +111,9 @@ class Game {
 
         for (let xi = xmin; xi <= xmax; xi++) {
             for (let yi = ymin; yi <= ymax; yi++) {
-                if (this.grid[x + xi][y + yi]) neighbours++
+                if (xi !== 0 || yi !== 0) {
+                    if (grid[x + xi][y + yi]) neighbours++
+                }
             }
         }
         if (neighbours < 2 || neighbours > 3) {
