@@ -1,0 +1,15 @@
+canvas{
+  border:solid 3px rgb(255, 255, 255);
+}
+
+body, html, #root, .App{
+  height:100%;
+  width:100%;
+}
+
+.App{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color:darkslateblue
+}
