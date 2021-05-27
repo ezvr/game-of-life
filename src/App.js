@@ -5,7 +5,7 @@ import Canvas from './Canvas'
 function App() {
     const [step, setStep] = useState(0)
     //const newGame = new Game(setStep)
-    const [newGame, setNewGame] = useState(new Game(setStep))
+    const [newGame] = useState(new Game(setStep))
 
     return (
         <div className="App">
