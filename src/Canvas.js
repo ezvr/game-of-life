@@ -10,9 +10,9 @@ const Canvas = (props) => {
         let frameCount = 0
         let animationFrameId
 
-        const render = () => {
+        const render = (now) => {
             frameCount++
-            draw(context, frameCount)
+            draw(context, frameCount, now)
             animationFrameId = window.requestAnimationFrame(render)
         }
         render()
