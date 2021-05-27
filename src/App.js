@@ -27,11 +27,11 @@ class Game {
     constructor(setStep) {
         this.pause = false
         this.last = 0
-        this.speed = 200
+        this.speed = 100
         this.step = 0
         this.setStep = setStep
 
-        this.numberOfDivisions = 100
+        this.numberOfDivisions = 200
         this.createGrid()
         this.draw = this.draw.bind(this)
         this.togglePause = this.togglePause.bind(this)
