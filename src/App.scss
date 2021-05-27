@@ -13,3 +13,10 @@ body, html, #root, .App{
   align-items: center;
   background-color:darkslateblue
 }
+
+.ctrl{
+  position:fixed;
+  left:0;
+  display:flex;
+  flex-direction: column;
+}
